@@ -16,13 +16,34 @@ import quotes from "./assets/images/bg-quotes.png";
 
 import location from "./assets/images/icon-location.svg";
 import phone from "./assets/images/icon-phone.svg";
-import email from "./assets/images/icon-email.svg";
+import mail from "./assets/images/icon-email.svg";
 
 import facebook from "./assets/images/icon-facebook.svg";
 import twitter from "./assets/images/icon-twitter.svg";
 import instagram from "./assets/images/icon-instagram.svg";
 
+import bgMobile from "./assets/images/bg-curvy-mobile.svg";
+import bgDesktop from "./assets/images/bg-curvy-desktop.svg";
+import { useState } from "react";
+
 function App() {
+  const dummyEmail = "lalala@lala.com";
+  const [email, setEmail] = useState(dummyEmail);
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
+    event.preventDefault();
+    const formElement = event.target as HTMLFormElement;
+    const newEmail = formElement.email.value;
+    setEmail(newEmail);
+  }
+
+  function validateEmail(string: string): boolean {
+    const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
+    return emailRegex.test(string);
+  }
+
+  const isValidEmail = validateEmail(email);
+
   return (
     <>
       <header>
@@ -32,19 +53,27 @@ function App() {
         <nav>
           <ul>
             <li>
-              <a href="">Features</a>
+              <a href="#" className="nav-a">
+                Features
+              </a>
             </li>
             <li>
-              <a href="">Team</a>
+              <a href="#" className="nav-a">
+                Team
+              </a>
             </li>
             <li>
-              <a href="">Sign In</a>
+              <a href="#" className="nav-a">
+                Sign In
+              </a>
             </li>
           </ul>
         </nav>
       </header>
       <main>
         <section className="hero-section">
+          <img src={bgMobile} alt="" className="bg mobile" />
+          <img src={bgDesktop} alt="" className="bg desktop" />
           <picture>
             <img src={illustration} alt="" />
           </picture>
@@ -104,19 +133,21 @@ function App() {
           <picture>
             <img src={stayProductive} alt="" />
           </picture>
-          <h2>Stay productive, wherever you are</h2>
-          <p>
-            Never let location be an issue when accessing your files. Fylo has
-            you covered for all of your file storage needs.
-          </p>
-          <p>
-            Securely share files and folders with friends, family and colleagues
-            for live collaboration. No email attachments required.
-          </p>
-          <a href="">
-            <p>See how Fylo works</p>{" "}
-            <img src={arrow} alt="" className="arrow" />
-          </a>
+          <div className="productive-text">
+            <h2>Stay productive, wherever you are</h2>
+            <p>
+              Never let location be an issue when accessing your files. Fylo has
+              you covered for all of your file storage needs.
+            </p>
+            <p>
+              Securely share files and folders with friends, family and
+              colleagues for live collaboration. No email attachments required.
+            </p>
+            <a href="#">
+              <p>See how Fylo works</p>{" "}
+              <img src={arrow} alt="" className="arrow" />
+            </a>
+          </div>
         </section>
         <section className="testimonials-section">
           <div className="testimonial quotes-holder">
@@ -177,8 +208,13 @@ function App() {
             extremely generous. If you have any questions, our support team
             would be happy to help you.
           </p>
-          <input type="text" />
-          <button>Get Started For Free</button>
+          <form onSubmit={handleSubmit} action="">
+            <input type="text" name="email" />
+            {isValidEmail ? undefined : (
+              <p className="error">Please enter a valid email address</p>
+            )}
+            <button type="submit">Get Started For Free</button>
+          </form>
         </section>
       </main>
 
@@ -187,57 +223,71 @@ function App() {
           <img src={logo} alt="" />
         </picture>
         <div className="footer-grid">
-          <img src={location} alt="" />
-          <img src={phone} alt="" />
-          <img src={email} alt="" />
-          <p>
+          <img src={location} alt="" className="one" />
+          <img src={phone} alt="" className="two" />
+          <img src={mail} alt="" className="three" />
+          <p className="four">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua
           </p>
-          <p>+1-543-123-4567</p>
-          <p>example@fylo.com</p>
+          <p className="five">+1-543-123-4567</p>
+          <p className="six">example@fylo.com</p>
         </div>
         <nav>
           <ul className="flex-col">
             <li>
-              <a href="">About Us</a>
+              <a href="#" className="footer-a">
+                About Us
+              </a>
             </li>
             <li>
-              <a href="">Jobs</a>
+              <a href="#" className="footer-a">
+                Jobs
+              </a>
             </li>
             <li>
-              <a href="">Press</a>
+              <a href="#" className="footer-a">
+                Press
+              </a>
             </li>
             <li>
-              <a href="">Blog</a>
+              <a href="#" className="footer-a">
+                Blog
+              </a>
             </li>
           </ul>
           <ul className="flex-col">
             <li>
-              <a href="">Contact Us</a>
+              <a href="#" className="footer-a">
+                Contact Us
+              </a>
             </li>
             <li>
-              <a href="">Terms</a>
+              <a href="#" className="footer-a">
+                Terms
+              </a>
             </li>
             <li>
-              <a href="">Privacy</a>
+              <a href="#" className="footer-a">
+                Privacy
+              </a>
             </li>
           </ul>
         </nav>
 
-        <ul className="flex-row self-center">
+        <ul className="flex-row self-center social">
           <li>
-            <a href="">
+            <a href="#">
               <img src={facebook} alt="" className="social-icon" />
             </a>
           </li>
           <li>
-            <a href="">
+            <a href="#">
               <img src={twitter} alt="" className="social-icon" />
             </a>
           </li>
           <li>
-            <a href="">
+            <a href="#">
               <img src={instagram} alt="" className="social-icon" />
             </a>
           </li>
